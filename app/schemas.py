@@ -10,4 +10,5 @@ class PredictionCreate(PredictionBase):
     pass
 
 class Prediction(PredictionBase):
+    id:int
     traffic: float
