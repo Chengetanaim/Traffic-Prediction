@@ -19,7 +19,7 @@ def get_prediction(id:int, db:database.SessionDep):
     return prediction
 
 
-@router.post('', status_code=201)
+@router.post('', status_code=201, response_model=schemas.Prediction)
 def create_prediction(prediction_data:schemas.PredictionBase, db:database.SessionDep):
     prediction_dict = {'CodedDay': [prediction_data.coded_day], 'Zone': [prediction_data.zone], 'Weather': [prediction_data.zone], 'Temperature': [prediction_data.temperature]}
     df = pd.DataFrame(prediction_dict)
