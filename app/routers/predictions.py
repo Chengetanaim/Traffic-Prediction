@@ -5,10 +5,22 @@ import joblib
 
 router = APIRouter(prefix='/predictions', tags=['Predictions'])
 
-@router.get('', response_model=list[schemas.Prediction])
+@router.get('')
 def get_predictions(db:database.SessionDep):
     predictions = db.query(models.Prediction).all()
-    return predictions
+    return [
+        schemas.PredictionSchema(
+            id=p.id,
+            coded_day=p.coded_day,
+            day_name=p.day_name,
+            zone=p.zone,
+            zone_name=p.zone_name,
+            weather=p.weather,
+            temperature=p.temperature,
+            traffic=p.traffic
+        )
+        for p in predictions
+    ]
 
 
 @router.get('/{id}', response_model=schemas.Prediction)
